@@ -4,16 +4,16 @@ This is a simple Flask-based web application that predicts whether an email is *
 
 ## Project Structure
 
-spam_mail_prediction/
-│
-├── app.py # Main Flask application (backend)
-├── templates/
-│ └── index.html # The HTML file for the frontend
-├── predict/
-│ ├── spam_mail_model.pkl # Trained spam detection model
-│ └── vectorizer.pkl # Vectorizer used for transforming email content
-├── requirements.txt # List of Python dependencies (Flask, scikit-learn, etc.)
-└── README.md # Project documentation
+spam_mail_prediction/                                                      
+│                                                                                  
+├── app.py # Main Flask application (backend)                                                         
+├── templates/                                                                       
+│ └── index.html # The HTML file for the frontend                                          
+├── predict/                                                                                       
+│ ├── spam_mail_model.pkl # Trained spam detection model                                                
+│ └── vectorizer.pkl # Vectorizer used for transforming email content                                                       
+├── requirements.txt # List of Python dependencies (Flask, scikit-learn, etc.)                                                             
+└── README.md # Project documentation                                                                                     
 
 ## Features
 
