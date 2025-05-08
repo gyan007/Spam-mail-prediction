@@ -12,10 +12,8 @@ spam_mail_prediction/
 ├── predict/
 │ ├── spam_mail_model.pkl # Trained spam detection model
 │ └── vectorizer.pkl # Vectorizer used for transforming email content
-├── static/ # Static files (optional, for CSS or images)
 ├── requirements.txt # List of Python dependencies (Flask, scikit-learn, etc.)
 └── README.md # Project documentation
-
 
 ## Features
 
