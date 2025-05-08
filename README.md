@@ -2,7 +2,7 @@
 
 This is a simple Flask-based web application that predicts whether an email is **Spam** or **Not Spam (Ham)**. The app uses a pre-trained machine learning model to classify email content based on the text entered by the user.
 
-## project Screenshot
+## Project Screenshot
 ![Spam Mail Prediction Screenshot](images/Screenshot1.png)
 
 ## Project Structure
