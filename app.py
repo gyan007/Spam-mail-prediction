@@ -1,31 +1,43 @@
-from flask import Flask, request, jsonify, render_template
+import streamlit as st
 import pickle
+import os
 
-app = Flask(__name__)
+# Set page title and a brief description
+st.set_page_config(page_title="Spam Mail Prediction")
+st.title("📧 Spam Mail Prediction App")
+st.markdown("Enter the content of the email below:")
 
-# Load the trained model and vectorizer (make sure these files are in the correct directory)
-model = pickle.load(open('./predict/spam_mail_model.pkl', 'rb'))
-vectorizer = pickle.load(open('./predict/vectorizer.pkl', 'rb'))
-
-@app.route('/')
-def home():
-    return render_template('index.html')
-
-@app.route('/predict', methods=['POST'])
-def predict():
-    data = request.get_json()
-    email_content = data['content']
+# --- Load the Model and Vectorizer ---
+# Adjust the paths to your model files if they are not in the same directory
+try:
+    model_path = os.path.join(os.path.dirname(__file__), 'predict', 'spam_mail_model.pkl')
+    vectorizer_path = os.path.join(os.path.dirname(__file__), 'predict', 'vectorizer.pkl')
     
-    # Transform the input using the loaded vectorizer
-    transformed_input = vectorizer.transform([email_content])
+    model = pickle.load(open(model_path, 'rb'))
+    vectorizer = pickle.load(open(vectorizer_path, 'rb'))
     
-    # Predict using the loaded model
-    prediction = model.predict(transformed_input)
-    
-    # Return the result ('Spam' or 'Not Spam')
-    result = 'Spam' if prediction[0] == 0 else 'Not Spam'
-    return jsonify({'prediction': result})
+except FileNotFoundError:
+    st.error("Error: Model files not found. Please ensure 'spam_mail_model.pkl' and 'vectorizer.pkl' are in the 'predict' folder.")
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# --- UI Components and Prediction Logic ---
 
+# Text area for user input
+email_content = st.text_area("Email Content", height=200, help="Type the email text here to check if it's spam.")
+
+# Predict button
+if st.button("Predict"):
+    if email_content:
+        with st.spinner("Analyzing email..."):
+            # Transform the input using the loaded vectorizer
+            transformed_input = vectorizer.transform([email_content])
+            
+            # Predict using the loaded model
+            prediction = model.predict(transformed_input)
+            
+            # Display the result
+            if prediction[0] == 0:
+                st.error("🛑 This email is classified as **Spam**.")
+            else:
+                st.success("✅ This email is **Not Spam**.")
+    else:
+        st.warning("Please enter some email content to predict.")
